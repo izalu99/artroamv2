@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
 import { ArtProvider } from "@/components/useArtContext";
+import { Analytics } from "@vercel/analytics/react"
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,6 +26,7 @@ export default function RootLayout({
             {children}
             <Footer />
           </ArtProvider>
+          <Analytics />
       </body>
     </html>
   );
