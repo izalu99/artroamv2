@@ -108,8 +108,6 @@ const ComparePage = () => {
                                             altText={art?.altText}
                                             title={art?.title}
                                             artist={art?.artist}
-                                            showAddButton={false}
-                                            showRemoveButton={true}
                                         />
                                     </div>
                                     <button
@@ -142,8 +140,6 @@ const ComparePage = () => {
                                         altText={art?.altText}
                                         title={art?.title}
                                         artist={art?.artist}
-                                        showAddButton={false}
-                                        showRemoveButton={true}
                                     />
                                 </div>
                                 <button onClick={() => handleSelect(art)} className="mt-2 w-full btn btn-accent">
