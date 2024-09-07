@@ -21,7 +21,6 @@ const json = throttle(async (endpoint: string): Promise<HarvardApiResponse<ArtDa
     throw new Error('API key is missing');
   }
   const url = `${HARVARD_ART_MUSEUMS_API_URL}${endpoint}&apikey=${HARVARD_API_KEY}`;
-  console.log('api request url:', url);
 
   try {
     const response = await fetch(url);
@@ -44,8 +43,6 @@ const json = throttle(async (endpoint: string): Promise<HarvardApiResponse<ArtDa
 export const searchDataHAM = async (query: string): Promise<HarvardApiResponse<ArtDataHAM>> => {
   const endpoint = `object?q=${query}`;
   const response = await json(endpoint);
-  console.log(response);
-  console.log('response records:', response.records);
   return response;
 }
 
@@ -75,7 +72,6 @@ export const getArtistName = (art: ArtDataHAM): string => {
 export const getArtDetailsHAM = async (id: string): Promise<HarvardApiResponse<ArtDataHAM>> => {
   try {
     const response = await json(`object?q=${id}`);
-    console.log(response);
     return response;
   } catch (error) {
     console.error('Harvard Art Museum API request error: ', error);

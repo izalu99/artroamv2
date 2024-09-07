@@ -34,6 +34,16 @@ body {
 
 
 .neon-text {
-  text-shadow: 0 0 8px #00FFFF, 0 0 16px #00FFFF, 0 0 24px #00FFFF, 0 0 32px #00FFFF;
+  text-shadow: 0 0 4px #00FFFF, 0 0 8px #00FFFF, 0 0 16px #00FFFF, 0 0 24px #00FFFF;
+}
+
+
+/* for displaying the note */
+.note {
+  display: none;
+}
+
+.group:hover .note {
+  display: block;
 }
 

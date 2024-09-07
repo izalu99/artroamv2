@@ -1,51 +1,53 @@
 
 
-import React from 'react';
+import React, { useState } from 'react';
 import {Col, Card, Button} from 'react-bootstrap';
 import Link from 'next/link';
+
 
 import { useArtContext } from '@/components/useArtContext';
 
 
-interface ArtCardProps {
+
+export interface ArtCardProps {
     source: string;
     artID: string;
     imgURL: string;
     altText: string;
     title: string;
     artist: string;
-    showAddButton: boolean;
-    showRemoveButton: boolean;
 }
 
-export default function ArtCard({source, artID, imgURL, altText, title, artist, showAddButton, showRemoveButton}: ArtCardProps){
+export default function ArtCard({source, artID, imgURL, altText, title, artist}: ArtCardProps){
 
-   
+
+    
+
     let artDetailsURL= null;
     if (source == 'CAM'){
-        artDetailsURL = `/artdetailsCAM/${artID}`;
+        const modifiedTitle = title.replace(/ /g, '-').toLowerCase();
+        artDetailsURL = `${process.env.NEXT_PUBLIC_ART_INSTITUTE_CHICAGO_BASE_DETAILS_URL}${artID}/${modifiedTitle}`;
     }
     else if (source == 'HAM'){
-        artDetailsURL = `/artdetailsHAM/${artID}`;
+        artDetailsURL = `${process.env.NEXT_PUBLIC_HARVARD_ART_MUSEUMS_BASE_DETAILS_URL}${artID}`;
     }
     else{
         artDetailsURL = '/';
     }
 
-    const { collection, addToCollection, removeFromCollection } = useArtContext();
+    const { addToCollection, removeFromCollection, collection } = useArtContext();
+
+
+    // find out if the art piece is already in the collection
+    const artInCollection = collection.find((item) => item.artID === artID);
+    
     // event handler for adding art to collection
     const handleAddToCollection = () => {
-        
-        if (showAddButton){
-            addToCollection({source, artID, imgURL, altText, title, artist});
-            //console.log('collection: ', collection);
-            alert('Added to collection!');
-        }
-        
+        const artPiece = {source, artID, imgURL, altText, title, artist};
+        addToCollection(artPiece); 
     }
 
     const handleRemoveFromCollection = () => {
-        console.log('remove from collection the id: ', artID);
         removeFromCollection(artID);
     }
     
@@ -53,38 +55,40 @@ export default function ArtCard({source, artID, imgURL, altText, title, artist, 
     return(
         <Col 
         key= {artID}
-        className='w-2/3 rounded mx-auto flex-col align-items-center justify-content-center text-center'>
+        className='w-2/3 group mx-auto flex-col align-items-center justify-content-center text-center'>
 
             <Link 
             href={artDetailsURL} 
             target="_blank">
-                <Card className="m-3">
-                    <Card.Img variant="top" src={imgURL} alt={altText} className="mx-auto rounded-lg border-4 border-custom-pearl hover:border-custom-pink"/>
+                <Card className="rounded-lg border-2 border-base-100 hover:border-primary relative">
+                    <Card.Img variant="top" src={imgURL} alt={altText} className="mx-auto rounded-lg"/>
                     <Card.Body className="pt-5 pb-2 text-center">
                         <Card.Title className='text-2xl'>{title}</Card.Title>
                         <Card.Text className='text-lg'>{artist}</Card.Text>
                     </Card.Body>
+                    <div className="note absolute top-0 right-0 bg-neutral-900 text-primary p-2 rounded hidden group-hover:block">
+                        Click to see more details
+                    </div>
                 </Card>
-            </Link>
-            
+            </Link>            
             {/*Conditionally render the Add to Collection button based on showAddButton*/}
-            {showAddButton &&(
+            {!artInCollection && (
                 <Button
                 variant="primary"
-                className="mx-auto mb-10 bg-custom-pearl text-custom-neon-blue font-bold text-sm py-2 px-2 rounded hover:text-custom-pearl hover:bg-custom-pink" 
+                className="mx-auto mb-10 text-secondary font-bold text-sm py-2 px-2 rounded border-base-100 hover:border-primary" 
                 onClick={handleAddToCollection}>
-                    Add to Collection
+                    Add to Compare List
                 </Button>
                 
             )}
 
-            {/*Conditionally render the Add to Collection button based on showAddButton*/}
-            {showRemoveButton &&(
+            {/*Conditionally render the Add to Compare list button based on showAddButton*/}
+            {artInCollection && (
                 <Button 
                 variant="primary" 
-                className="mx-auto className='mb-10' bg-custom-pearl text-custom-neon-blue font-bold text-sm py-2 px-2 rounded hover:text-custom-pearl hover:bg-custom-pink" 
+                className="mx-auto text-secondary font-bold text-sm py-2 px-2 rounded border-base-100 hover:border-primary" 
                 onClick={handleRemoveFromCollection}>
-                    Remove from Collection
+                    Remove from Compare List
                 </Button>
                 
             )}

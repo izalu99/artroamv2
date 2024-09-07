@@ -6,12 +6,11 @@ interface SortProps {
 
 const Sort = ({ handleSortChange }: SortProps) => {
   return (
-    <div className="w-auto mb-10 mx-auto p-5 text-center">
-      <h3 className="text-lg font-semibold mb-2 text-secondary ">Sort:</h3>
+    <div className="w-auto mx-auto p-5 text-center">
       <select
         id="sort-select"
         onChange={(e) => handleSortChange(e.target.value)}
-        className="w-full p-2 rounded text-accent bg-neutral border border-primary"
+        className="w-full p-2 rounded text-secondary bg-neutral border-0 hover:border-2 border-primary"
       >
         <option value="default">Select</option>
         <option value="title">Title</option>

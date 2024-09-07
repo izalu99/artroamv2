@@ -12,13 +12,24 @@ interface ArtContextType {
   showChicago: boolean;
   showHarvard: boolean;
   collection: any[];
-  addToCollection: (artPiece: {}) => void;
+  addToCollection: (artPiece: ArtPiece) => void;
   removeFromCollection: (artID: string) => void;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   handleSortChange: (sort: string) => void;
   handleFilterChange: (filter: 'chicago' | 'harvard', checked: boolean) => void;
 }
+
+
+type ArtPiece = {
+  source: string;
+  artID: string;
+  imgURL: string;
+  altText: string;
+  title: string;
+  artist: string;
+}
+
 
 const ArtContext = createContext<ArtContextType | undefined>(undefined);
 
@@ -44,18 +55,32 @@ export const ArtProvider = ({ children }: ArtProviderProps) => {
   const [showChicago, setShowChicago] = useState<boolean>(true);
   const [showHarvard, setShowHarvard] = useState<boolean>(false);
   const [sortOption, setSortOption] = useState<string>('default');
-  const [collection, setCollection] = useState<any[]>([]);
+  const [collection, setCollection] = useState<ArtPiece[]>([]);
 
-  const addToCollection = (artPiece: {}) => {
-    setCollection((prevCollection) => [...prevCollection, artPiece]);
-    console.log(collection);
+
+  const addToCollection = (artPiece: ArtPiece) => {
+    try{
+      if (collection.some((item) => item.artID === artPiece?.artID)) {
+        return;
+      }
+      setCollection((prevCollection) => [...prevCollection, artPiece]);
+
+    }catch(error: any){
+      console.log('error:', error.message);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   const removeFromCollection = (artID: string) => {
-    console.log('remove from collection:', artID);
-    setCollection((prevCollection) =>
-      prevCollection.filter((artPiece) => artPiece.id !== artID)
-    );
+    try{
+      setCollection((prevCollection) =>
+        prevCollection.filter((artPiece) => artPiece.artID !== artID)
+      );
+    } catch(error: any){
+      console.log('error:', error.message);
+      alert('An error occurred. Please try again.');
+    }
+
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +106,23 @@ export const ArtProvider = ({ children }: ArtProviderProps) => {
     setLoading((previous)=> !previous);
   };
 
+  
+
   useEffect(() => {
+    const sortResults = (results: (ArtDataCAM | ArtDataHAM | any)[], sortOption: string) => {
+      if (sortOption === 'title') {
+        return results.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+      } else if (sortOption === 'artist') {
+        return results.sort((a, b) => {
+          const artistA = (a as ArtDataCAM).artist_title || getArtistName(a);
+          const artistB = (b as ArtDataCAM).artist_title || getArtistName(b);
+          return artistA.localeCompare(artistB);
+        });
+      } else {
+        return results; // Return the results as is
+      }
+    };
+
     if (!query || query.length < 3) {
       setCamResults([]);
       setHamResults([]);
@@ -113,19 +154,7 @@ export const ArtProvider = ({ children }: ArtProviderProps) => {
       });
   }, [query, showChicago, showHarvard, sortOption]);
 
-  const sortResults = (results: (ArtDataCAM | ArtDataHAM | any)[], sortOption: string) => {
-    if (sortOption === 'title') {
-      return results.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
-    } else if (sortOption === 'artist') {
-      return results.sort((a, b) => {
-        const artistA = (a as ArtDataCAM).artist_title || getArtistName(a);
-        const artistB = (b as ArtDataCAM).artist_title || getArtistName(b);
-        return artistA.localeCompare(artistB);
-      });
-    } else {
-      return results; // Return the results as is
-    }
-  };
+  
 
   const getArtistName = (art: ArtDataHAM): string => {
     if (art.people && art.people.length > 0) {

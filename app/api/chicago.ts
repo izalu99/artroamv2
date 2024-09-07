@@ -23,7 +23,6 @@ interface ChicagoApiResponse<T> {
 const chicago_json = throttle(async (endpoint: string): Promise<ChicagoApiResponse<ArtDataCAM>> => {
   // API url
   const url = `${ART_INSTITUTE_CHICAGO_API_URL}${endpoint}`;
-  //console.log('api request url:', url);
 
   try {
     // Fetch data from API
@@ -34,8 +33,8 @@ const chicago_json = throttle(async (endpoint: string): Promise<ChicagoApiRespon
     // Convert response to JSON
     const data: ChicagoApiResponse<ArtDataCAM> = await response.json();
     return data;
-  } catch (error) {
-    console.error('Chicago Art Museum API request error: ', error);
+  } catch (error: any) {
+    console.error('Chicago Art Museum API request error: ', error.message);
     throw error;
   }
 }, 1000); // Limit to 1 call per second
@@ -71,7 +70,6 @@ export const imgURLCAM = (id: string): string =>
 export const getArtDetailsCAM = async (id: string): Promise<ChicagoApiResponse<ArtDataCAM>> => {
   // API url
   const url = `https://api.artic.edu/api/v1/artworks/${id}/manifest.json`;
-  console.log('api request url:', url);
 
 
   try {
@@ -82,10 +80,9 @@ export const getArtDetailsCAM = async (id: string): Promise<ChicagoApiResponse<A
     }
     // Convert response to JSON
     const data: ChicagoApiResponse<ArtDataCAM> = await response.json();
-    //console.log('art details:', data);
     return data;
-  } catch (error) {
-    console.error('Chicago Art Museum API request error: ', error);
+  } catch (error: any) {
+    console.error('Chicago Art Museum API request error: ', error.message);
     throw error;
   }
 }
