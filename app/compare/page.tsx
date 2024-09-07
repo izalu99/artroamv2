@@ -35,44 +35,22 @@ const ComparePage = () => {
     }, [selectedArts]);
 
 
-    useEffect(() => {
-        if (isMinimized) {
-            setShowFloatingText(true);
-            const timer = setTimeout(() => {
-                setShowFloatingText(false);
-            }, 2000); // 3 seconds then hide
-            return () => clearTimeout(timer);
-        }
-    }, [isMinimized]);
-
 
     const toggleMinimize = () => {
         setIsMinimized((prev) => !prev);
     };
 
-    const handleMouseEnter = () => {
-        if (isMinimized) {
-            setShowFloatingText(true);
-        }
-    };
-
-    const handleMouseLeave = () => {
-        if (isMinimized) {
-            setShowFloatingText(false);
-        }
-    };
+    
         
 
     return (
         <div className="flex flex-col items-center space-y-8 mx-10 bg-base-100 min-h-screen">
             <div className='relative w-full flex flex-col justify-between'>
-                <h1 className="text-4xl text-primary font-bold align-middle text-center neon-text">Compare Arts</h1>
+                <h1 className="text-4xl bg-gradient-to-r bg-clip-text font-bold align-middle text-center from-neon-cyan via-neon-magenta-500 to-neon-cyan text-transparent">Compare Arts</h1>
                 <p className="mt-20 text-center text-secondary text-neon"> Select two arts to compare them side by side.</p>
                 {/* Minimize button */}
                 <button 
                 onClick={toggleMinimize}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave} 
                 className="btn text-secondary border border-primary hover:bg-primary hover:text-base-100 absolute top-0 right-0 mb-5">
                     {isMinimized ? (
                         <span><FontAwesomeIcon icon={faCaretDown} className="text-xl" /></span>
@@ -82,8 +60,8 @@ const ComparePage = () => {
                 </button>
 
                 {/* Floating text */}
-                {showFloatingText && (
-                    <div className="absolute top-0 right-0 mt-12 mr-5 bg-transparent text-secondary text-neon p-2 shadow-lg">
+                {isMinimized && (
+                    <div className="absolute top-0 right-0 mt-12 mr-5 bg-transparent text-secondary animate-fadeIn p-2 shadow-lg">
                         Click the caret to see the selected arts
                     </div>
                 )}

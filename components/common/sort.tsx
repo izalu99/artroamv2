@@ -10,7 +10,7 @@ const Sort = ({ handleSortChange }: SortProps) => {
       <select
         id="sort-select"
         onChange={(e) => handleSortChange(e.target.value)}
-        className="w-full p-2 rounded text-secondary bg-neutral border-0 hover:border-2 border-primary"
+        className="animate-fadeIn w-full p-2 rounded text-secondary bg-neutral border-0 hover:border-2 border-primary"
       >
         <option value="default">Select</option>
         <option value="title">Title</option>

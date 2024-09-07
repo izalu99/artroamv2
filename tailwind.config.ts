@@ -20,8 +20,35 @@ const config: Config = {
         "orange-red": "#FF4500",
         "neon-green-500": "#39ff14",
         "neon-pink": "#ff007f",
+        "neon-magenta-500": "#ff00ff",
+      },
+
+      keyframes: {
+        fadeIn:{
+          '0%': {opacity: '0'},
+          '100%': {opacity: '1'}
+        },
+        fadeOut:{
+          '0%': {opacity: '1'},
+          '100%': {opacity: '0'}
+        },
+        slideIn:{
+          '0%': {transform: 'translateX(-100%)'},
+          '100%': {transform: 'translateX(0)'}
+        },
+        slideOut:{
+          '0%': {transform: 'translateX(0)'},
+          '100%': {transform: 'translateX(-100%)'}
+        },
+        },
+      animation: {
+        'fadeIn': 'fadeIn 1s ease-in-out',
+        'fadeOut': 'fadeOut 2s ease-in-out',
+        'slideIn': 'slideIn 2s ease-in-out',
+        'slideOut': 'slideOut 2s ease-in-out'
       },
     },
+
   },
   plugins: [daisyui],
   daisyui:{
@@ -37,6 +64,7 @@ const config: Config = {
           'success': '#7CFC00',  // Lawn Green
           'warning': '#FFD700',  // Gold
           'error': '#FF4500',  // Orange Red
+
         },
 
       },
