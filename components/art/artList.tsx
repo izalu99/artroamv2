@@ -6,15 +6,16 @@ import { Row, Col, Container } from 'react-bootstrap';
 interface ArtListProps {
   results: any[];
   loading: boolean;
+  searchInitiated: boolean;
 }
 
-const ArtList = ({ results, loading }: ArtListProps) => {
+const ArtList = ({ results, loading, searchInitiated }: ArtListProps) => {
     
     return(
     <Container>
         <div>
             {loading && <p>Loading...</p>}
-            {results.length === 0 && !loading && <p>No results found.</p>}
+            {searchInitiated && results.length === 0 && !loading && <p>No results found.</p>}
         </div>
         <Row className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
             {results.map((art:any) => (

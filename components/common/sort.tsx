@@ -6,7 +6,10 @@ interface SortProps {
 
 const Sort = ({ handleSortChange }: SortProps) => {
   return (
-    <div className="w-auto mx-auto p-5 text-center">
+    <div className="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-md md:max-w-lg p-4 mx-40">
+      <label htmlFor="sort-select" className="text-secondary text-sm mb-2">
+        Sort by
+      </label>
       <select
         id="sort-select"
         onChange={(e) => handleSortChange(e.target.value)}
@@ -16,6 +19,7 @@ const Sort = ({ handleSortChange }: SortProps) => {
         <option value="title">Title</option>
         <option value="artist">Artist</option>
       </select>
+      
     </div>
   );
 };

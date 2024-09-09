@@ -12,6 +12,7 @@ export default function Home() {
   const {
     query,
     mergedResults,
+    searchInitiated,
     handleSearch,
     handleSubmit,
     handleSortChange,
@@ -20,11 +21,11 @@ export default function Home() {
   } = useArtContext();
  
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex flex-col items-center justify-between p-18 md:p-24 lg:p-30">
       <div className='flex flex-col'>
         <SearchBar query={query} handleSearch={handleSearch} handleSubmit={handleSubmit}/>
         <Filter handleFilterChange={handleFilterChange} handleSortChange={handleSortChange}/>
-        <ArtList results={mergedResults} loading={loading}/>  
+        <ArtList results={mergedResults} loading={loading} searchInitiated={searchInitiated}/>  
       </div>
     </main>
   );

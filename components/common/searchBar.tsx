@@ -2,9 +2,9 @@ import { FaSearch } from "react-icons/fa"; // Import the search icon from react-
 
 const SearchBar = ({query, handleSearch, handleSubmit}:any) => {
   return (
-    <div className="animate-slideIn flex justify-center p-4 md:p-6 lg:p-8">
-        <form onSubmit={handleSubmit}>
-            <div className="form-control w-full max-w-md">
+    <div className="animate-slideIn flex justify-center w-full p-4 ">
+        <form onSubmit={handleSubmit} className="flex w-full justify-center">
+            <div className="form-control w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
             <div className="relative">
                 <input
                 type="text"

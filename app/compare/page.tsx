@@ -35,6 +35,16 @@ const ComparePage = () => {
     }, [selectedArts]);
 
 
+    // Deselect arts that are removed from the collection
+    useEffect(() => {
+        setSelectedArts((prevSelected) =>
+            prevSelected.filter((selectedArt) =>
+                collection.some((art: any) => art.artID === selectedArt.artID)
+            )
+        );
+    }, [collection]);
+
+
 
     const toggleMinimize = () => {
         setIsMinimized((prev) => !prev);

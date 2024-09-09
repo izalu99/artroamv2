@@ -60,8 +60,8 @@ export default function ArtCard({source, artID, imgURL, altText, title, artist}:
             <Link 
             href={artDetailsURL} 
             target="_blank">
-                <Card className="rounded-lg border-2 border-base-100 hover:border-primary relative">
-                    <Card.Img variant="top" src={imgURL} alt={altText} className="mx-auto rounded-lg"/>
+                <Card className="bg-neutral rounded-lg border-2 border-base-100 hover:border-primary relative">
+                    <Card.Img variant="top" src={imgURL} alt={altText} className="mx-auto rounded-t-lg"/>
                     <Card.Body className="pt-5 pb-2 text-center">
                         <Card.Title className='text-2xl'>{title}</Card.Title>
                         <Card.Text className='text-lg'>{artist}</Card.Text>

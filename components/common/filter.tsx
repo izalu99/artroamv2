@@ -8,22 +8,22 @@ interface FilterProps {
 
 const Filter = ({ handleFilterChange, handleSortChange }: FilterProps) => {
   return (
-    <div className="flex flex-wrap justify-center w-auto mb-10 mx-auto text-center">
-      <div className="flex flex-row space-x-3 px-3 items-center justify-center">
+    <div className="flex flex-wrap justify-center w-auto mb-10 mx-auto text-center max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+      <div className="flex flex-row space-x-4 pb-10 px-3 items-center justify-center w-full sm:w-auto">
         <input
           type="checkbox"
           id="chicagoFilter"
-          className="animate-fadeIn rounded-md justify-self-center "
+          className="w-5 h-5 animate-fadeIn rounded-md"
           onChange={(e) => handleFilterChange('chicago', e.target.checked)}
           defaultChecked
         />
         <label htmlFor="chicagoFilter" className="text-sm text-secondary">Chicago Art Museum</label>
       </div>
-      <div className='flex flex-row space-x-3 px-3 items-center justify-center'>
+      <div className='flex flex-row space-x-4 pb-10 px-3 items-center justify-center w-full sm:w-auto'>
         <input
           type="checkbox"
           id="harvardFilter"
-          className="animate-fadeIn rounded-md justify-self-center"
+          className="w-5 h-5 animate-fadeIn rounded-md"
           onChange={(e) => handleFilterChange('harvard', e.target.checked)}
           defaultChecked
         />

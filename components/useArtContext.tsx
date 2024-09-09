@@ -1,10 +1,12 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback, useMemo } from 'react';
 import { searchDataCAM, ArtDataCAM  } from "@/app/api/chicago";
 import { searchDataHAM, ArtDataHAM } from '@/app/api/harvard';
+import debounce from 'lodash';
 
 interface ArtContextType {
   query: string;
+  searchInitiated: boolean;
   mergedResults: any[];
   loading: boolean;
   error: Error | null;
@@ -47,6 +49,7 @@ interface ArtProviderProps {
 
 export const ArtProvider = ({ children }: ArtProviderProps) => {
   const [query, setQuery] = useState<string>('');
+  const [searchInitiated, setSearchInitiated] = useState<boolean>(false);
   const [camResults, setCamResults] = useState<ArtDataCAM[]>([]);
   const [hamResults, setHamResults] = useState<ArtDataHAM[]>([]);
   const [mergedResults, setMergedResults] = useState<any[]>([]);
@@ -58,7 +61,7 @@ export const ArtProvider = ({ children }: ArtProviderProps) => {
   const [collection, setCollection] = useState<ArtPiece[]>([]);
 
 
-  const addToCollection = (artPiece: ArtPiece) => {
+  const addToCollection = useCallback((artPiece: ArtPiece) => {
     try{
       if (collection.some((item) => item.artID === artPiece?.artID)) {
         return;
@@ -69,9 +72,10 @@ export const ArtProvider = ({ children }: ArtProviderProps) => {
       console.log('error:', error.message);
       alert('An error occurred. Please try again.');
     }
-  };
+  }, [collection]);
 
-  const removeFromCollection = (artID: string) => {
+
+  const removeFromCollection = useCallback((artID: string) => {
     try{
       setCollection((prevCollection) =>
         prevCollection.filter((artPiece) => artPiece.artID !== artID)
@@ -81,30 +85,33 @@ export const ArtProvider = ({ children }: ArtProviderProps) => {
       alert('An error occurred. Please try again.');
     }
 
-  };
+  },[]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+
+  const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-  };
+    setSearchInitiated(true);
+  },[setQuery, setSearchInitiated]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-  };
+  },[]);
 
-  const handleFilterChange = (filter: 'chicago' | 'harvard', checked: boolean) => {
+  const handleFilterChange = useCallback((filter: 'chicago' | 'harvard', checked: boolean) => {
     if (filter === 'chicago') {
       setShowChicago(checked);
     }
     if (filter === 'harvard') {
       setShowHarvard(checked);
     }
-  };
+  },[]);
 
-  const handleSortChange = (sort: string) => {
+  const handleSortChange = useCallback((sort: string) => {
     setSortOption(sort);
     setLoading((previous)=> !previous);
-  };
+  },[]);
 
   
 
@@ -163,8 +170,10 @@ export const ArtProvider = ({ children }: ArtProviderProps) => {
     return 'Unknown artist';
   };
 
-  const contextValue: ArtContextType = {
+  
+  const contextValue = useMemo(() => ({
     query,
+    searchInitiated,
     mergedResults,
     loading,
     error,
@@ -178,7 +187,23 @@ export const ArtProvider = ({ children }: ArtProviderProps) => {
     handleSubmit,
     handleSortChange,
     handleFilterChange,
-  };
+  }), [
+    query,
+    searchInitiated,
+    mergedResults,
+    loading,
+    error,
+    sortOption,
+    showChicago,
+    showHarvard,
+    collection,
+    addToCollection,
+    removeFromCollection,
+    handleSearch,
+    handleSubmit,
+    handleSortChange,
+    handleFilterChange,
+  ]);
 
   return <ArtContext.Provider value={contextValue}>{children}</ArtContext.Provider>;
 };
