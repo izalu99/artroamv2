@@ -10,7 +10,6 @@ const ComparePage = () => {
     const { collection } = useArtContext();
     const [selectedArts, setSelectedArts] = useState<any[]>([]);
     const [isMinimized, setIsMinimized] = useState<boolean>(false);
-    const [showFloatingText, setShowFloatingText] = useState<boolean>(false);
     const scrollRef = useRef<HTMLDivElement>(null);
 
 
@@ -54,10 +53,10 @@ const ComparePage = () => {
         
 
     return (
-        <div className="flex flex-col items-center space-y-8 mx-10 bg-base-100 min-h-screen">
+        <div className="flex flex-col items-center space-y-8 sm:mx-10 bg-transparent min-h-screen">
             <div className='relative w-full flex flex-col justify-between'>
-                <h1 className="text-4xl bg-gradient-to-r bg-clip-text font-bold align-middle text-center from-neon-cyan via-neon-magenta-500 to-neon-cyan text-transparent">Compare Arts</h1>
-                <p className="mt-20 text-center text-secondary text-neon"> Select two arts to compare them side by side.</p>
+                <h1 className="text-xl md:text-2xl lg:text-4xl bg-gradient-to-r bg-clip-text font-bold align-middle text-center from-neon-cyan via-neon-magenta-500 to-neon-cyan text-transparent">Compare Arts</h1>
+                <p className="mt-10 md:mt-20 text-center text-secondary text-neon"> Select two arts to compare them side by side.</p>
                 {/* Minimize button */}
                 <button 
                 onClick={toggleMinimize}
@@ -78,16 +77,16 @@ const ComparePage = () => {
 
                 {/* Horizontally scrollable Compare list */}
                 {!isMinimized && (
-                    <div className="flex overflow-x-auto py-4 space-x-6 w-full items-center justify-center scrollbar-hide">
+                    <div className="flex overflow-x-auto space-x-4 md:space-x-6 w-full py-4 items-center justify-start scrollbar-hide px-4 sm:px-10">
                         {collection.length === 0 ? (
-                            <div className="mt-50 align-text-bottom text-center text-secondary">
+                            <div className="mt-10 md:mt-50 align-text-bottom text-center text-secondary">
                                 No added Art yet to be compared.
                             </div>
                         ) : (
                             collection.map((art: any) => (
                                 <div 
                                     key={art?.artID} 
-                                    className="min-w-[300px] max-w-[300px] flex-shrink-0 flex flex-col justify-between active:border hover:border-primary rounded-lg p-4">
+                                    className="min-w-[150px] sm:min-w-[200px] md:min-w-[300px] max-w-[150px] sm:max-w-[200px] md:max-w-[300px] flex-shrink-0 flex flex-col justify-between active:border hover:border-primary rounded-lg p-2 sm:p-4">
                                     <div className="flex flex-grow">
                                         <ArtCard
                                             source={art?.source}
