@@ -21,7 +21,7 @@ export default function Home() {
   } = useArtContext();
  
   return (
-    <main className="flex flex-col items-center justify-between p-18 md:p-24 lg:p-30">
+    <main className="flex flex-col items-center justify-between p-18 md:p-24 lg:p-30 bg-transparent">
       <div className='flex flex-col'>
         <SearchBar query={query} handleSearch={handleSearch} handleSubmit={handleSubmit}/>
         <Filter handleFilterChange={handleFilterChange} handleSortChange={handleSortChange}/>

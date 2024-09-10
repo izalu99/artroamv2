@@ -55,16 +55,17 @@ export default function ArtCard({source, artID, imgURL, altText, title, artist}:
     return(
         <Col 
         key= {artID}
-        className='w-2/3 group mx-auto flex-col align-items-center justify-content-center text-center'>
+        className='w-2/3 mx-auto flex-col align-items-center justify-content-center text-center'>
 
             <Link 
             href={artDetailsURL} 
-            target="_blank">
-                <Card className="bg-neutral rounded-lg border-2 border-base-100 hover:border-primary relative">
+            target="_blank"
+            className='group'>
+                <Card className="bg-neutral rounded-lg hover:border-2 hover:border-primary relative shadow-lg">
                     <Card.Img variant="top" src={imgURL} alt={altText} className="mx-auto rounded-t-lg"/>
                     <Card.Body className="pt-5 pb-2 text-center">
-                        <Card.Title className='text-2xl'>{title}</Card.Title>
-                        <Card.Text className='text-lg'>{artist}</Card.Text>
+                        <Card.Title className='text-2xl text-primary'>{title}</Card.Title>
+                        <Card.Text className='text-lg text-secondary'>{artist}</Card.Text>
                     </Card.Body>
                     <div className="note absolute top-0 right-0 bg-neutral-900 text-primary p-2 rounded hidden group-hover:block">
                         Click to see more details
@@ -75,7 +76,7 @@ export default function ArtCard({source, artID, imgURL, altText, title, artist}:
             {!artInCollection && (
                 <Button
                 variant="primary"
-                className="mx-auto mb-10 text-secondary font-bold text-sm py-2 px-2 rounded border-base-100 hover:border-primary" 
+                className="mx-auto mt-3 mb-10 font-bold text-sm py-2 px-2 text-secondary border-0 bg-transparent p-2 rounded-lg hover:bg-primary hover:text-neutral" 
                 onClick={handleAddToCollection}>
                     Add to Compare List
                 </Button>
@@ -86,7 +87,7 @@ export default function ArtCard({source, artID, imgURL, altText, title, artist}:
             {artInCollection && (
                 <Button 
                 variant="primary" 
-                className="mx-auto text-secondary font-bold text-sm py-2 px-2 rounded border-base-100 hover:border-primary" 
+                className="mx-auto mt-3 mb-10 font-bold text-sm py-2 px-2 text-secondary border-0 bg-transparent p-2 rounded-lg hover:bg-primary hover:text-neutral" 
                 onClick={handleRemoveFromCollection}>
                     Remove from Compare List
                 </Button>
