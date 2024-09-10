@@ -76,6 +76,7 @@ export default function ArtCard({source, artID, imgURL, altText, title, artist}:
             {!artInCollection && (
                 <Button
                 className="mx-auto mt-3 mb-10 font-bold text-xs sm:text-sm md:text-md lg:text-lg py-2 px-2 text-secondary border-0 bg-transparent p-2 rounded-lg hover:text-primary hover:bg-transparent" 
+                color='transparent'
                 onClick={handleAddToCollection}>
                     Add to Compare List
                 </Button>
@@ -86,6 +87,7 @@ export default function ArtCard({source, artID, imgURL, altText, title, artist}:
             {artInCollection && (
                 <Button 
                 className="mx-auto mt-3 mb-10 font-bold text-xs sm:text-sm md:text-md lg:text-lg py-2 px-2 text-secondary border-0 bg-transparent p-2 rounded-lg hover:text-primary hover:bg-transparent" 
+                color='transparent'
                 onClick={handleRemoveFromCollection}>
                     Remove from Compare List
                 </Button>
