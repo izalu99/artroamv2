@@ -8,7 +8,7 @@ const SearchBar = ({query, handleSearch, handleSubmit}:any) => {
             <div className="relative">
                 <input
                 type="text"
-                placeholder="Search Art Roam..."
+                placeholder="Search for art and explore..."
                 value={query}
                 onChange={handleSearch}
                 className="input input-bordered w-full bg-neutral text-secondary placeholder-secondary pr-10 focus:outline-none focus:ring-2 focus:ring-primary"
